@@ -1,0 +1,23 @@
+{
+    "name": "drlenux/large-array",
+    "description": "Array for big data",
+    "type": "library",
+    "require-dev": {
+        "phpunit/phpunit": "^10.4"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Drlenux\\LargeArray\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "eselbelokudrenko",
+            "email": "oleksii.bielokudrenko@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">5.6"
+    }
+}
