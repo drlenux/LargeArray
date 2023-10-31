@@ -17,6 +17,8 @@ class LargeArray implements \ArrayAccess, \Countable, \Iterator
 
 	public function __construct($salt = '')
 	{
+		$salt = str_replace(' ', '_', $salt);
+		$salt = SQLite3::escapeString($salt);
 		$this->db = new SQLite3(':memory:');
 		$this->tableName = 'mem_' . uniqid(rand()) . $salt;
 		$this->initializeTable();
@@ -66,6 +68,7 @@ class LargeArray implements \ArrayAccess, \Countable, \Iterator
 		if ($isId && is_int($offset)) {
 			$query = "SELECT value FROM {$this->tableName} WHERE id = {$offset}";
 		} else {
+			$offset = SQLite3::escapeString($offset);
 			$query = "SELECT value FROM {$this->tableName} WHERE keys = '{$offset}'";
 		}
 		$result = $this->db->querySingle($query);
@@ -91,5 +94,14 @@ class LargeArray implements \ArrayAccess, \Countable, \Iterator
 	{
 		$query = "SELECT COUNT(*) FROM {$this->tableName}";
 		return $this->db->querySingle($query);
+	}
+
+	public function in($offset)
+	{
+		$offset = serialize($offset);
+		$offset = SQLite3::escapeString($offset);
+		$query = "SELECT value FROM {$this->tableName} WHERE value = '{$offset}'";
+		$result = $this->db->querySingle($query);
+		return $result !== false;
 	}
 }
