@@ -34,4 +34,11 @@ class LargeArrayTest extends TestCase
 			$this->assertEquals($key, $arr[$key]);
 		}
 	}
+
+	public function testSubArray()
+	{
+		$arr = new LargeArray();
+		$arr['foo'] = ['bar' => 'baz'];
+		$this->assertEquals('baz', $arr['foo']['bar']);
+	}
 }

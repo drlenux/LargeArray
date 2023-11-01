@@ -25,11 +25,12 @@ composer require drlenux/large-array
 use Drlenux\LargeArray\LargeArray;
 
 $array = new LargeArray(/** optional salt **/);
-$array = new LargeArray('for_report'); // don't use space
+$array = new LargeArray('for report');
 
 for ($i = 0; $i < 1_000_000; $i++) $array[] = $i;
 $array['test'] = 'test value';
-$array['sub']['array'] = true;
+$array['sub']['array'] = true; // don't use, 'cause return null
+$array['sub'] = ['array' => true]; // it's correct
 
 $array->in(5000); // result: true [instead of in_array]
 $array[5000] // result: 5000
